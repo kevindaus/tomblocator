@@ -7,7 +7,16 @@ Yii::app()->clientScript->registerCssFile($baseUrl.'/bower_components/font-aweso
 
 /*leaflet libs*/
 Yii::app()->clientScript->registerCssFile($baseUrl.'/css/leaflet.css');
+Yii::app()->clientScript->registerCssFile($baseUrl.'/css/leaflet.label.css');
 Yii::app()->clientScript->registerScriptFile($baseUrl.'/js/leaflet.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile($baseUrl.'/js/Label.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile($baseUrl.'/js/BaseMarkerMethods.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile($baseUrl.'/js/Marker.Label.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile($baseUrl.'/js/CircleMarker.Label.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile($baseUrl.'/js/Path.Label.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile($baseUrl.'/js/Map.Label.js', CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile($baseUrl.'/js/FeatureGroup.Label.js', CClientScript::POS_END);
+
 /* end leaflet */
 
 
@@ -35,6 +44,23 @@ var mapBounds = new L.LatLngBounds(
     window.map.unproject([2048, 0], mapMaxZoom));
             
 window.map.fitBounds(mapBounds);
+
+gate_icon = L.icon({
+  iconUrl: '/themes/hebo/img/gate-icon.png',
+  iconSize: [36, 36],
+  iconAnchor: [18, 18],
+  popupAnchor: [0, -18],
+  labelAnchor: [14, 0] 
+});
+L.marker([-53,99], {
+    icon: gate_icon 
+  })
+  .bindPopup('Gate')
+  .bindLabel('Gate')
+  .addTo(window.map)
+  .openPopup();
+
+
 L.tileLayer('/{z}/{x}/{y}.png', {
   minZoom: mapMinZoom, 
   maxZoom: mapMaxZoom,
