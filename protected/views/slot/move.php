@@ -49,7 +49,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
         array(
             'type'=>'raw',
-            'value'=>'CHtml::link("Move to bone box", array("slot/Revoke","tombName"=>$data->tombInformations[0]->tombLocation->tomb_name,"notes"=>"revoked at ".date("Y-m-d H:i:s")))',
+            'value'=>'CHtml::link("Move to bone box", array("slot/Revoke","personId"=>$data->id,"tombName"=>$data->tombInformations[0]->tombLocation->tomb_name,"notes"=>"revoked at ".date("Y-m-d H:i:s")))',
         ),
 
     ),    

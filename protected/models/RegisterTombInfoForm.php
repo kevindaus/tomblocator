@@ -32,7 +32,7 @@ class RegisterTombInfoForm extends CFormModel
     {
         return array(
             array('person_title,gender,person_firstname,person_lastname,person_street,person_province,person_country,person_zipcode,person_cause_of_death,person_date_of_birth,person_date_of_death,tomb_location_latitude,tomb_location_longitude', 'required'),
-            array('person_middlename', 'nonDigit'),
+            array('person_title,gender,person_firstname,person_lastname', 'nonDigit'),
             array('person_middlename,person_employment_company,person_occupation,person_height,person_weight', 'safe'),
         );
     }
@@ -42,7 +42,7 @@ class RegisterTombInfoForm extends CFormModel
             "person_firstname" => "Firstname",
             "person_middlename" => "Middlename",
             "person_lastname" => "Lastname",
-            "person_street" => "Street number and name ",
+            "person_street" => "Street name and number ",
             "person_province" => "Province",
             "person_country" => "Country",
             "person_zipcode" => "Zipcode",
@@ -62,7 +62,7 @@ class RegisterTombInfoForm extends CFormModel
         $verdict = true;
         if (preg_match("/\d+/", $this->$attrib)) {
             //number detected
-            $this->addError($attrib , "Invalid character detected. Letters only.");
+            $this->addError($attrib , "Invalid character detected. Please remove number character.");
             $verdict = false;
         }
         return $verdict;

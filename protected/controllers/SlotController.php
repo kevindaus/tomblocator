@@ -197,38 +197,56 @@ class SlotController extends Controller
 		$dataProvider->pagination = false;
 		$this->render('move',compact('dataProvider'));
 	}
-	public function actionRevoke($tombName,$notes)
+	public function actionRevoke($personId,$tombName,$notes)
 	{
 		/*get record by tomb name*/
 		$criteria = new CDbCriteria;
 		$criteria->compare("tomb_name",$tombName);
 		$tombLocationObj = TombLocations::model()->find($criteria);
+		$personObject = Person::model()->findByPk($personId);
 		if ($tombLocationObj) {
 			/*check if tomb resident date_of_death 10 years lapse*/
 			$currentYear = date("Y");
 			$currentYear = intval($currentYear);
-			$dateCreation = date("Y", strtotime($tombLocationObj->tombInformations[0]->person->date_of_death));
+			$dateCreation = date("Y", strtotime($personObject->date_of_death));
 			$dateCreation = intval($dateCreation);
-			if (  ( $currentYear - $dateCreation) > 10 || YII_DEBUG ) {
+			if (  ( $currentYear - $dateCreation) > 10  ) {
 				//create log
 				$newTombInfoLog = new TombInformationLogs;
-				$newTombInfoLog->person_id   = $tombLocationObj->tombInformations[0]->person_id;
+				$newTombInfoLog->person_id = $personObject->id;
 				$newTombInfoLog->tomb_location_id   = $tombLocationObj->tombInformations[0]->tomb_location_id;
 				$newTombInfoLog->notes   = $notes;
 				$newTombInfoLog->save();
 
-				/*update to available*/
-				$modelTombLoc = TombLocations::model()->findByPk($tombLocationObj->tombInformations[0]->tombLocation->id);
-				$modelTombLoc->status = TombLocations::AVAILABLE;
-				$modelTombLoc->save();
-
-				/*remove tombinformation record*/
-				$modelTombInfo = TombInformation::model()->findByPk($tombLocationObj->tombInformations[0]->id);
-				if (!$modelTombInfo->delete()) {
-					$newTombInfoLog->delete();
-					$modelTombLoc->status = TombLocations::TAKEN;
-					$modelTombLoc->save();
+				/*update to availability*/
+				if (count($tombLocationObj->tombInformations) == 0) {
+					$tombLocationObj->status = TombLocations::AVAILABLE;
+					$tombLocationObj->save();
+				}else if (count($tombLocationObj->tombInformations) >= 1) {
+					$tombLocationObj->status = TombLocations::TAKEN;
+					$tombLocationObj->save();
 				}
+
+				/*remove tombinformation record - where id of person is */
+				$deleteQueryStr = <<<EOL
+delete tbl_tomb_information.* from 
+tbl_tomb_information
+inner join tbl_person on tbl_person.id = tbl_tomb_information.person_id
+where 
+tbl_person.id = :person_id and 
+tbl_tomb_information.tomb_location_id = :tomb_location_id
+EOL;
+				$tempPersonIdContainer = $personObject->id;
+				$tempTombIdContainer = $tombLocationObj->id;
+				$deleteQueryCommand = Yii::app()->db->createCommand($deleteQueryStr);
+				$deleteQueryCommand->bindParam(':person_id' , $tempPersonIdContainer,PDO::PARAM_INT);
+				$deleteQueryCommand->bindParam(':tomb_location_id',$tempTombIdContainer,PDO::PARAM_INT);
+				$deleteQueryCommand->execute();
+
+				// $modelTombInfo = TombInformation::model()->findByPk($tombLocationObj->tombInformations[0]->id);
+				// if (!$modelTombInfo->delete()) {
+				// 	$newTombInfoLog->delete();
+				// }
 				//done
 				Yii::app()->user->setFlash("success","Tomb resident invoked. Tomb is now available. ");
 			}else{

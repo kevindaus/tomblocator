@@ -92,6 +92,7 @@ class TombInformationLogs extends CActiveRecord
 		$criteria->compare('notes',$this->notes,true);
 		$criteria->compare('date_record_created',$this->date_record_created,true);
 		$criteria->compare('date_record_updated',$this->date_record_updated,true);
+		$criteria->order = "date_record_created DESC";
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
