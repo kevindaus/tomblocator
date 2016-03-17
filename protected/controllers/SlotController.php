@@ -218,14 +218,6 @@ class SlotController extends Controller
 				$newTombInfoLog->notes   = $notes;
 				$newTombInfoLog->save();
 
-				/*update to availability*/
-				if (count($tombLocationObj->tombInformations) == 0) {
-					$tombLocationObj->status = TombLocations::AVAILABLE;
-					$tombLocationObj->save();
-				}else if (count($tombLocationObj->tombInformations) >= 1) {
-					$tombLocationObj->status = TombLocations::TAKEN;
-					$tombLocationObj->save();
-				}
 
 				/*remove tombinformation record - where id of person is */
 				$deleteQueryStr = <<<EOL
@@ -243,11 +235,20 @@ EOL;
 				$deleteQueryCommand->bindParam(':tomb_location_id',$tempTombIdContainer,PDO::PARAM_INT);
 				$deleteQueryCommand->execute();
 
-				// $modelTombInfo = TombInformation::model()->findByPk($tombLocationObj->tombInformations[0]->id);
-				// if (!$modelTombInfo->delete()) {
-				// 	$newTombInfoLog->delete();
-				// }
-				//done
+				/*recount after delete then update to availability*/
+				$recountCriteria = new CDbCriteria;
+				$recountCriteria->compare("person_id",$tempPersonIdContainer);
+				$recountCriteria->compare("tomb_location_id",$tempTombIdContainer);
+				$recountResult = TombInformation::model()->count($recountCriteria);
+
+				if ($recountResult == 0) {
+					$tombLocationObj->status = TombLocations::AVAILABLE;
+					$tombLocationObj->save();
+				}else if ($recountResult >= 1) {
+					$tombLocationObj->status = TombLocations::TAKEN;
+					$tombLocationObj->save();
+				}
+				
 				Yii::app()->user->setFlash("success","Tomb resident invoked. Tomb is now available. ");
 			}else{
 				Yii::app()->user->setFlash("error","Sorry you cant invoke the tomb yet. 10 years hasn't passed yet. ");
