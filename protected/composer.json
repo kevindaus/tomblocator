@@ -1,0 +1,11 @@
+{
+    "name": "kevin/protected",
+    "authors": [
+        {
+            "name": "kebyang",
+            "email": "kelvo_link@yahoo.com"
+        }
+    ],
+    "require-dev": {
+    }
+}
