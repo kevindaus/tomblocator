@@ -211,7 +211,9 @@ Tip and info :
 
 
 
-
+---
+<h1> If you found any error (Im sure there are plenty) , Feel free to create an issue here https://github.com/kevindaus/tomblocator/issues together with the screenshot of the error. 
+</h1>
 
 ---
 
