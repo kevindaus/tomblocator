@@ -1,5 +1,4 @@
 protected/data/*
-*.bat
 .todo
 protected/components/UserIdentity.php
 protected/vendor/
