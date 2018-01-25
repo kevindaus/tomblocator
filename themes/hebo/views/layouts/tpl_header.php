@@ -41,6 +41,15 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo $baseUrl;?>/images/icons/114.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo $baseUrl;?>/images/icons/72.png">
     <link rel="apple-touch-icon-precomposed" href="<?php echo $baseUrl;?>/images/icons/57.png">
+
+    <style type="text/css">
+        .footer a
+         {
+            color: white !important;
+        }       
+    </style>
+
+
   </head>
 
 <body>

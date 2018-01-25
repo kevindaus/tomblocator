@@ -211,11 +211,36 @@ Tip and info :
 * Make sure WAMP or XAMP is turned on
 * Make sure to remember your username/password after executing installUserAndRightsModule.bat . If you cant remember your account just delete the whole database and double click `installUserAndRightsModule.bat`
 
+<h3>FAQ</h3>
+== How to allocate or register an available tomb ==
+
+1. Login as admin 
+1. Go to http://localhost:8000/index.php/slot/addAvailable   
+1. Select region    
+1. Tombname . Example . A1 , A2 , A3    
+1. Click add marker    
+1. You can zoom in the map by scrolling in to the map.
+1. If you are sure of everything. ```Save```
+
+== How to register a dead person to a tomb  ==
+1. Login as admin 
+1. Go to http://localhost:8000/index.php/slot/register   
+1. Enter person details (the dead person not you)   
+1. Select tomb by clicking ```Show Available Tombs```
+1. Click the marker to submit the record.
+
+== How to register a dead person to a tomb  ==
+1. Login as admin 
+1. Go to http://localhost:8000/index.php/slot/search
+1. Search the person
+1. Click search
+1. You should see where the tomb is located
+
 
 
 ---
-<h1> If you found any error (Im sure there are plenty) , Feel free to create an issue here https://github.com/kevindaus/tomblocator/issues together with the screenshot of the error. 
-</h1>
+<h4> If you found any error (Im sure there are plenty) , Feel free to create an issue here https://github.com/kevindaus/tomblocator/issues together with the screenshot of the error. 
+</h4>
 
 ---
 
