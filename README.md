@@ -20,7 +20,7 @@ Installation Process :
 3. Open command prompt and go to that path where you extracted the file. e.g `C:\wamp\www\tomblocator`
 4. Now go to protected folder by executing `cd protected` then download the required library by executing `composer self-update && composer update`
 5. Now execute command `cd ..` then execute `mkdir assets`
-6. Now execute command `cd protected` then execute command `notepad main.php`. Notepad should open then paste this configuration code
+6. Now execute command `cd protected/config` then execute command `notepad main.php`. Notepad should open then paste this configuration code
 ```php
 <?php
 
@@ -127,8 +127,8 @@ return array(
         'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=CHANGE_THIS_TO_DATABASENAME',
             'emulatePrepare' => true,
-            'username' => 'CHANGE_THIS_TO_DATABASE_USERNAME',
-            'password' => 'CHANGE_THIS_TO_DATABASE_PASSWORD',
+            'username' => 'CHANGE_THIS_TO_DATABASE_USERNAME', //dont forget to CHANGE this
+            'password' => 'CHANGE_THIS_TO_DATABASE_PASSWORD', //dont forget to CHANGE this
             'charset' => 'utf8',  
         ),
         'errorHandler' => array(
@@ -151,7 +151,7 @@ return array(
               array(
               'class'=>'CEmailLogRoute',
               'levels'=>'error',
-              'emails'=>'hellsing357@gmail.com',
+              'emails'=>'peter_jackson@gmail.com',
               ),
              */
             ),
@@ -166,7 +166,9 @@ return array(
 );
 
 ```
-Save the file by pressing `ctrl + s` . Now close the file. 
+Save the file by pressing `ctrl + s` and close the file. 
+
+
 7. Execute `notepad console.php` , notepad should open then paste this configuration code
 ```php
 <?php
@@ -185,8 +187,8 @@ return array(
         'db'=>array(
             'connectionString' => 'mysql:host=localhost;dbname=DATABASE',
             'emulatePrepare' => true,
-            'username' => 'DB_USERNAME_CHANGE_THIS',
-            'password' => 'DB_PASSWORD_CHANGE_THIS',
+            'username' => 'DB_USERNAME_CHANGE_THIS', //dont forget to CHANGE this
+            'password' => 'DB_PASSWORD_CHANGE_THIS', //dont forget to CHANGE this
             'charset' => 'utf8',  
         ),
 	),
