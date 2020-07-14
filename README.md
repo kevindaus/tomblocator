@@ -1,4 +1,4 @@
-# Simple Tomb Locator
+# Simple Grave Locator
 
 Simple implementation of Tomb Locator. This web base system allows user to map out a tomb in a map . 
 
